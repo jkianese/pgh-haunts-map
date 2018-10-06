@@ -8,7 +8,7 @@ class HauntedMap extends Component {
     constructor(props) {
         super(props);
         this.state = {
-                haunts: [
+                haunts: [ // 13 Most Haunted Places in Pittsburgh, PA
                   {name: "Green Man's Tunnel", location: {lat: 40.272873, lng:  -79.969088}},
                   {name: "The House The Devil Built", location: {lat: 40.449524, lng: -80.020125}},
                   {name: "13 Bends", location: {lat: 40.5426195, lng: -79.864586}},
@@ -40,8 +40,8 @@ class HauntedMap extends Component {
     // this.getVenues()
     window.initMap = this.initMap
     
-    }
- 
+    }  
+  
   initMap = () => {
 
     const google = window.google
@@ -49,32 +49,60 @@ class HauntedMap extends Component {
 
     // create a map 
     const map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 40.448506, lng: -80.002501},
-      zoom: 12,
+      center: {lat: 40.4127981, lng: -80.0013632},
+      zoom: 11,
       styles: styles,
       mapTypeId: 'terrain' 
     });
 
-    this.setState({
-      'map': map
-    })
+    let infowindow = new google.maps.InfoWindow()
 
+    /*
+    this.setState({
+      'map': map,
+      'infowindow': infowindow
+    })
+    */
     this.state.haunts.forEach((location, ind) => {
+
       const marker = new google.maps.Marker({
           position: {lat: location.location.lat, lng: location.location.lng},
           map: map,
-      })
-    })
-    // let markerImage = new google.maps.MarkerImage(Map_marker_icon_-Nicholas_Mollet_-_Ghost_-_Events_-_Dark.png)
-    
+          title: location.name, 
+          animation: window.google.maps.Animation.DROP,
+          // When the time is right to try to add a custom icon:
+          // icon: './Map_marker_icon_–_Nicolas_Mollet_–_Ghost_–_Events_–_Dark.png'
+        })
 
+        let contentString = `${location.name}`
 
-    // add markers
-    // let markers = this.state.haunts.map(haunt => 
-       
+        marker.addListener('click', function() {
+          infowindow.setContent(contentString)
+          infowindow.open(map, marker,) 
+            marker.setAnimation(window.google.maps.Animation.BOUNCE);
+              setTimeout(function(){ marker.setAnimation(null); }, 750);
+          // this.openInfoWindow(marker);    
+        });
+         
+      });
+        this.setState({
+          haunts: this.haunts
+        });
   }
 
-  
+    openInfoWindow(marker) {
+      this.closeInfoWindow();
+        this.state.infowindow.open(this.state.map, marker);
+        marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        this.setState({
+            'prevmarker': marker
+        });
+        this.state.infowindow.setContent('Loading Data...');
+        this.state.map.setCenter(marker.getPosition());
+        this.state.map.panBy(0, -200);
+        this.getMarkerInfo(marker);
+    }
+
 
   render() { 
     return (
