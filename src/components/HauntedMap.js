@@ -8,10 +8,25 @@ class HauntedMap extends Component {
     constructor(props) {
         super(props);
         this.state = {
-                venues: [],
+                haunts: [
+                  {name: "Green Man's Tunnel", location: {lat: 40.272873, lng:  -79.969088}},
+                  {name: "The House The Devil Built", location: {lat: 40.449524, lng: -80.020125}},
+                  {name: "13 Bends", location: {lat: 40.5426195, lng: -79.864586}},
+                  {name: "Broughton School", location: {lat: 40.325901, lng: -80.003950}},
+                  {name: "Frick Mansion", location: {lat: 40.4474811, lng: -79.903945}},
+                  {name: "Dead Man's Hollow", location: {lat: 40.3207147, lng: -79.859266}},
+                  {name: "The Early American Room", location: {lat: 40.4442526, lng: -79.9554277 }}, 
+                  {name: "The Pittsburgh Playhouse", location: {lat: 40.4363853, lng: -79.9649387}},
+                  {name: "Carnegie Library of Homestead", location: {lat: 40.407014, lng: -79.9051367}},
+                  {name: "Chatham University", location: {lat: 40.4482193, lng: -79.9264512}},
+                  {name: "Allegheny County Jail", location: {lat: 40.4349535, lng: -80.0019346}},
+                  {name: "Omni William Penn Hotel", location: {lat: 40.440719, lng: -79.999033}},
+                  {name: "Demon House of Brownsville Road", location: {lat: 40.376181, lng: -79.9780654}}
+                ],
+            markers: [],
             // query: '', // Do I need query?
             // venues: [], // Keep for now, may not need this
-            map: '',
+            // map: '',
             infowindow: '',
             prevmarker: ''
         };
@@ -44,24 +59,30 @@ class HauntedMap extends Component {
       zoom: 12
     })
     
-    // create an infowindow
-    let infowindow = new google.maps.InfoWindow()
     
-    
-    
-    // display dynamic markers
-    this.state.venues.map(myVenue => {
 
-    let contentString = `Venue Details: ${myVenue.venue.name}` 
+        this.setState({
+            'map': map,
+            //'infowindow': InfoWindow
+        });
+       
+        
+
+       
+    /*
+    // display dynamic markers
+    this.state.haunts.map(hauntedPlaces => {
+
+    let contentString = `${hauntedPlaces.haunts.name}` 
 
     let marker = new google.maps.Marker({
-      position: {lat: myVenue.venue.location.lat, lng: myVenue.venue.location.lng},
+      position: {lat: hauntedPlaces.venue.location.lat, lng: hauntedPlaces.venue.location.lng},
       map: map,
-      title: myVenue.venue.name,
+      title: hauntedPlaces.haunts.name,
       animation: window.google.maps.Animation.DROP,
       
     });
-
+    
     // click on a marker
     marker.addListener('click', function() {
         infowindow.setContent(contentString)
@@ -69,12 +90,15 @@ class HauntedMap extends Component {
           marker.setAnimation(window.google.maps.Animation.BOUNCE);
             setTimeout(function(){ marker.setAnimation(null); }, 750);
     });
+    
     this.setState({
-        venues: this.venues
+        haunts: this.haunts
     });        
   });
-    
+    */
 }
+
+
 /*
 getVenues = () => {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?"

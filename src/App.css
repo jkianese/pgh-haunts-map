@@ -52,7 +52,6 @@ html, body {
   height: calc(100vh - 60px);
   overflow-y: scroll;
 }
-
 #sidebar-inner {
   padding: 10px;
 }
