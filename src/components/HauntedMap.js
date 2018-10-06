@@ -8,7 +8,7 @@ class HauntedMap extends Component {
     constructor(props) {
         super(props);
         this.state = {
-                haunts: [
+                'haunts': [
                   {name: "Green Man's Tunnel", location: {lat: 40.272873, lng:  -79.969088}},
                   {name: "The House The Devil Built", location: {lat: 40.449524, lng: -80.020125}},
                   {name: "13 Bends", location: {lat: 40.5426195, lng: -79.864586}},
@@ -27,8 +27,8 @@ class HauntedMap extends Component {
             // query: '', // Do I need query?
             // venues: [], // Keep for now, may not need this
             // map: '',
-            infowindow: '',
-            prevmarker: ''
+            // infowindow: '',
+            //prevmarker: ''
         };
         // this.initMap = this.initMap.bind(this); // have this in initMap as well
         // this.openInfoWindow = this.openInfoWindow.bind(this);
@@ -49,81 +49,30 @@ class HauntedMap extends Component {
     */      
     }
  
-  initMap = () => {
+  initMap() {
 
     const google = window.google
+    const styles = [{"featureType":"all","elementType":"geometry.fill","stylers":[{"color":"#000000"}]},{"featureType":"all","elementType":"geometry.stroke","stylers":[{"color":"#000000"}]},{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#454a4e"},{"visibility":"on"}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"simplified"},{"color":"#1b1d1e"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":17},{"weight":1.2}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#db611d"},{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#1b1d1e"},{"lightness":"-2"},{"gamma":"1"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#1b1d1e"},{"lightness":"-2"},{"gamma":"1"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#1b1d1e"},{"lightness":"5"},{"gamma":"1"},{"weight":"0.20"},{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#1b1d1e"},{"lightness":29},{"weight":0.2},{"gamma":"1"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#1b1d1e"},{"lightness":"5"},{"gamma":"1"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#1b1d1e"},{"lightness":"12"},{"gamma":"1"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#1b1d1e"},{"lightness":"3"},{"gamma":"1"}]}]
 
     // create a map 
     const map = new google.maps.Map(document.getElementById('map'), {
       center: {lat: 40.448506, lng: -80.002501},
-      zoom: 12
-    })
-    
-    
-
-        this.setState({
-            'map': map,
-            //'infowindow': InfoWindow
-        });
-       
-        
-
-       
-    /*
-    // display dynamic markers
-    this.state.haunts.map(hauntedPlaces => {
-
-    let contentString = `${hauntedPlaces.haunts.name}` 
-
-    let marker = new google.maps.Marker({
-      position: {lat: hauntedPlaces.venue.location.lat, lng: hauntedPlaces.venue.location.lng},
-      map: map,
-      title: hauntedPlaces.haunts.name,
+      zoom: 12,
+      styles: styles,
+      mapTypeId: 'terrain' 
+    });
+    let markerImage = new google.maps.MarkerImage(Map_marker_icon_-Nicholas_Mollet_-_Ghost_-_Events_-_Dark.png)
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(40.448506, -80.002501),
       animation: window.google.maps.Animation.DROP,
-      
-    });
-    
-    // click on a marker
-    marker.addListener('click', function() {
-        infowindow.setContent(contentString)
-        infowindow.open(map, marker,) 
-          marker.setAnimation(window.google.maps.Animation.BOUNCE);
-            setTimeout(function(){ marker.setAnimation(null); }, 750);
-    });
-    
-    this.setState({
-        haunts: this.haunts
-    });        
+      map: map,
+      title: 'Happy Halloween!'
   });
-    */
-}
-
-
-/*
-getVenues = () => {
-    const endPoint = "https://api.foursquare.com/v2/venues/explore?"
-    const parameters = {
-      client_id: "F1BIU3KU3RZFBQKCLKJ2MX1AT2ZRZFYRUXTJUMFGA1YUS5ZF",
-      client_secret: "N1HLP0MSWYJJATAS3CBQTTSZ2WLME5RB2TAUWHGE2UXZ5A1E",
-      query: "arts", 
-      near: "Pittsburgh, PA",
-      //ll: "40.448506, -80.002501",
-      limit: 10,
-      v: "20181005"
-    }
-    // Run: npm install axios
-    axios.get(endPoint + new URLSearchParams(parameters))
-      .then(response => {
-        this.setState({
-          venues: response.data.response.groups[0].items
-        }, scriptSrc())
-      })
-      .catch(error => {
-        console.log("Error: " + error)
-      })
-      
+  
   }
-  */
+
+  
+
   render() { 
     return (
       <main>
