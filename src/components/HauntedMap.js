@@ -116,7 +116,7 @@ class HauntedMap extends Component {
 function scriptSrc() {
     let index = window.document.getElementsByTagName("script")[0]
     let script = window.document.createElement("script")
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBj5AzHYC1kUPRnvaT6G6zsAONHSpKmoqQ&callback=initMap'
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=&callback=initMap'
     script.async = true
     script.defer = true
     script.onerror = function() {
